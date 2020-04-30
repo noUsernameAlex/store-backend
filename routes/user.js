@@ -8,22 +8,22 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
-  const newUser = new User({username});
-
+  const {email, password} = req.body;
+  const newUser = new User({email, password});
+  console.log('email' + email + " password " + password);
   newUser.save().then(() => res.json('user added!'))
   .catch(err => res.status(400).json('error : ' + err));
   });
 
-router.route('/update').post((req, res) => {
-  const username = req.body.username;
-
-  let foundUser = User.findOne({'username' : username});
-  foundUser.username = username;
-  User.updateOne(foundUser).
-    then(() => res.json('updated!'))
-  .catch(err => res.json('error : ' + err));
-});
+// router.route('/update').post((req, res) => {
+//   const username = req.body.username;
+//
+//   let foundUser = User.findOne({'username' : username});
+//   foundUser.username = username;
+//   User.updateOne(foundUser).
+//     then(() => res.json('updated!'))
+//   .catch(err => res.json('error : ' + err));
+// });
 
 
 module.exports = router;
