@@ -2,6 +2,7 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 const bcrypt = require("bcrypt");
 
+// user login
 router.route('/').post((req, res) => {
   const {email, password} = req.body;
   User.findOne({ email : email }).then(user => {
@@ -30,12 +31,14 @@ router.route('/').post((req, res) => {
   });
 });
 
+// check if the user name exist
 router.route('/all').get((req, res) => {
     User.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json('error:' + err));
 });
 
+// add the user into database
 router.route('/add').post((req, res) => {
   const {email, password} = req.body;
   console.log('email' + email + "initial password " + password);
@@ -60,19 +63,6 @@ router.route('/add').post((req, res) => {
         });
       }
     });
-
-
-
-
-// router.route('/update').post((req, res) => {
-//   const username = req.body.username;
-//
-//   let foundUser = User.findOne({'username' : username});
-//   foundUser.username = username;
-//   User.updateOne(foundUser).
-//     then(() => res.json('updated!'))
-//   .catch(err => res.json('error : ' + err));
 });
-
 
 module.exports = router;
